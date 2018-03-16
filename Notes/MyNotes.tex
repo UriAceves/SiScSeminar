@@ -30,7 +30,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
 \usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
-
+\usepackage{amssymb}
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhead[RO,LE]{\thepage}
@@ -101,18 +101,49 @@ Dr. Johannes \textsc{Lotz} % Supervisor's Name
 %----------------------------------------------------------------------------------------
 
 
-\section{Abstract} % Major section
+\section*{Disclaimer}
+This notes are with the sole intention of better understanding the article that we will use for the simulation sciences seminar \cite{Wang}, and clarify some aspects in more depth. So they will be redundant with the cited paper, and in most cases the phrases will be either paraphrasing or literal copies of the original ones. For this reason the constant citations to \cite{Wang} will be omited, but we urge the reader to keep in mind that we are deliberately ommiting them.
+\section{Abstract}
+On this paper the Non-Intrusive Least Squares Shadowing (NILSS) is developed, the so called method computes the sensitivity\footnote{Sensitivity is the quantity that allows us to know how small changes on the initial conditions will affect the system for long time periods.} of quantities that are being averaged over long periods of time on chaotic dynamical systems. In NILSS tangent solutions\footnote{God knows what is a tangent solution} are represented as a linear combination of one inhomogeneous tangent solution and several homogeneous tangent solutions, in other words we take the decomposition of such tangent solution in homogeneous and inhomogeneous parts. The next step is to solve a least squares problem\footnote{Minimizing the sum of the squares of some quantities} using this decomposition. And hence the resulting solution can be used to compute the sensitivity\footnote{It remains to see how}. Advantages of this method is that it is easy to implement on existing solvers. furthermore, it has a low computational cost for systems with many degrees of freedom but few unstable modes\footnote{How do we know this and why? Additionaly, what is an unstable mode?}. On the paper NILSS is applied to two systems, Lorenz 63 and CFD simulation of flow over a backward-facing step. As a result, in both cases the sensitivities computed by NILSS reflect the common behaviour in the long-time averaged quantities of dynamical systems\footnote{I don't really know what the common behaviour is}.
+
+\section{Introduction}
+Many important phenomena in engineering and sciences are described by chaotic systems. In these systems, we are often interested in properties obtained from long-time averaged quantities. The main problem is, the systems are chaotic, and as a consequence, small changes in the initial data can lead to very different behaviours as time increases. The aim of the paper, is then, to provide tools to analyse the sensitivities of such systems, i.e. how a change on the initial data or the parameters affects the properties we are interested on.
+
+In order to define the problem we pose the differential equation governing the phenomenon and the initial conditions,
+
+\begin{equation}
+\frac{du}{dt} = f(u,s), \quad u(t=0) = u_0(\phi),
+\end{equation}
+where $f(u,s): \mathbb{R}^m \times \mathbb{R} \rightarrow \mathbb{R}^m$\footnote{I need to think about that m on the dimension.} is a smooth function, $u$ is the state of the system, and $s$ is the parameter. The initial condition $u_0$ is a smooth function of $\phi$\footnote{What is $\phi$}. Finally, a solution $u(t)$ will be called the primal solution.
+
+In the paper the objetives are long-time averaged quantities. To define them let $J(u,s): \mathbb{R}^m \times \mathbb{R} \rightarrow \mathbb{R}$ be a continuous function representing the instantaneous objective function. Then we can obtain the objective by averaging over an infinitely long trajectory
+
+\begin{equation}
+  \langle J \rangle_\infty := \lim_{t\to\infty} \langle J \rangle_T, \textrm{ where } \langle J \rangle_T := \frac{1}{T}\int_0^T J(u,s)dt,
+\end{equation}
+$\langle J \rangle_T$ depends on $u$, $s$ and $\phi$, while $\langle J \rangle_\infty$ is determined only by $s$ and $u_0$\footnote{Why not from $\phi$}. If we assume ergodicity, i.e. $\langle J \rangle_T = \langle J \rangle_\infty$, this will mean that $u_0$, and as a consequence $\phi$ does not affect $\langle J \rangle_\infty$\footnote{I don't really understand why}, and as a result $\langle J \rangle_\infty$ only depends on $s$.
+
+
 \section{Questions}
 \begin{description}
   \item [1] What is a tangent solution?
   \item [2] What is a least squares problem?
   \item [3] What is an unstable mode?
   \item [4] What are the Lorenz 63 and the CFD simulation of flow over backward-facing step systems?
+  \item [5] Why is NILSS good for systems with may degrees of freedom and few unstable modes?
 \end{description}
 \newpage
 \section{To do}
 
+\begin{enumerate}
+  \item Find what tangent solutions are.
+  \item Explain how the final solution is used to compute sensitivities.
+\end{enumerate}
 
+
+
+\bibliography{MyNotes.bib}
+\bibliographystyle{ieeetr}
 %
 % Example citation \cite{Figueredo:2009dg}.
 %
@@ -220,7 +251,7 @@ Dr. Johannes \textsc{Lotz} % Supervisor's Name
 %	BIBLIOGRAPHY
 %----------------------------------------------------------------------------------------
 
-% \begin{thebibliography}{99} % Bibliography - this is intentionally simple in this template
+%\begin{thebibliography}{99} % Bibliography - this is intentionally simple in this template
 %
 % \bibitem[Figueredo and Wolf, 2009]{Figueredo:2009dg}
 % Figueredo, A.~J. and Wolf, P. S.~A. (2009).
