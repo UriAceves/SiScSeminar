@@ -16,14 +16,14 @@
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 
-\documentclass[12pt,twoside,a4paper]{article} % Default font size is 12pt, it can be changed here
+\documentclass[10pt,twoside,a4paper]{article} % Default font size is 12pt, it can be changed here
 
 \usepackage{geometry} % Required to change the page size to A4
 \geometry{legalpaper, margin=2.5cm}
 
 
 \usepackage{graphicx} % Required for including pictures
-
+\usepackage{cancel}
 \usepackage{float} % Allows putting an [H] in \begin{figure} to specify the exact location of the figure
 \usepackage{wrapfig} % Allows in-line images such as the example fish picture
 \usepackage[english]{babel}
@@ -43,8 +43,8 @@
 
 \graphicspath{{Pictures/}} % Specifies the directory where pictures are stored
 
-\renewcommand{\thesection}{\Roman{section}}
-\renewcommand{\thesubsection}{\thesection.\Roman{subsection}}
+% \renewcommand{\thesection}{\Roman{section}}
+% \renewcommand{\thesubsection}{\thesection.\Roman{subsection} }
 
 \begin{document}
 
@@ -113,6 +113,7 @@ In order to define the problem we pose the differential equation governing the p
 
 \begin{equation}
 \frac{du}{dt} = f(u,s), \quad u(t=0) = u_0(\phi),
+\label{eq:1}
 \end{equation}
 where $f(u,s): \mathbb{R}^m \times \mathbb{R} \rightarrow \mathbb{R}^m$\footnote{I need to think about that m on the dimension.} is a smooth function, $u$ is the state of the system, and $s$ is the parameter. The initial condition $u_0$ is a smooth function of $\phi$\footnote{What is $\phi$}. Finally, a solution $u(t)$ will be called the primal solution.
 
@@ -120,6 +121,7 @@ In the paper the objetives are long-time averaged quantities. To define them let
 
 \begin{equation}
   \langle J \rangle_\infty := \lim_{t\to\infty} \langle J \rangle_T, \textrm{ where } \langle J \rangle_T := \frac{1}{T}\int_0^T J(u,s)dt,
+  \label{eq:2}
 \end{equation}
 $\langle J \rangle_T$ depends on $u$, $s$ and $\phi$, while $\langle J \rangle_\infty$ is determined only by $s$ and $u_0$\footnote{Why not from $\phi$}. If we assume ergodicity, i.e. $\langle J \rangle_T = \langle J \rangle_\infty$, this will mean that $u_0$, and as a consequence $\phi$ does not affect $\langle J \rangle_\infty$\footnote{I don't really understand why}, and as a result $\langle J \rangle_\infty$ only depends on $s$.
 
@@ -129,6 +131,7 @@ When the system is chaotic the computation of sensitivity is challenging, since
 
 \begin{equation}
   \frac{d}{ds} \langle J \rangle_\infty \neq \lim_{t\to \infty} \frac{\partial}{\partial s} \langle J \rangle_T (s,\phi,T).
+  \label{eq:3}
 \end{equation}
 This means that, if we fix the initial conditions $u_0(\phi)$, the process of $T\to\infty$ does not commute with differentiation by $s$\footnote{Basically on the left hand side first we let $T\to\infty$ and then differentiate, on the right hand side first we differentiate and then let $T\to\infty$}. And as a result, the transient method does not converge to the correct sensitivity.
 
@@ -166,6 +169,69 @@ The picture on the last row of Fig. \ref{fig:lz63} is obtained after letting tra
 the long-time effect generated from vrying $\rho$ is important for computing the long-time sensitivity, however, it is hidden on diverging trajectories and it can only be appreciated after a long time and an ensemble of millions of trajectories. As noted before, the transient effect is reflected by diverging trajectories, hence, if we can find two non-diverging trajectories, one with $\rho$ and the other with $\rho+\Delta \rho$ then their difference will not contain the transient effect. And therefore their difference will only have the long-time effect\footnote{What do we understand from ``non-diverging"?}.
 
 The main goal of the paper is then to devise a method able to generate the transient effect and then take it away from a varying $\rho$, so that we can find trajectories that do not diverge from one another, and whose difference contains only the long-time effect. As a matter of fact, in Fig. \ref{fig:lz63}, $\Delta u_0 = v\Delta p$ and $v$ represents the NILSS solution. As they show aveltually, this change in the initial conditions yields the transient effect, an by subtracting it from the two effects of a varying $\rho$, we can obtain the long-time effect using a short trajectory.
+
+\section{The idea of tangent NILSS}
+
+To strenghten up the ideas developed in the last section, in Section \ref{3.1}, the two perturbations are characterized mathematically as two different tangent solutions, i.e. inhomogeneous and homogeneous tangents. To get the long-time effect $v$ (inhomogeneous tangent), we construct an homogeneous tangent $w$ representing the long-time effect, and sustract it from the conventional inhomogeneous one $v^*$. Both effects are included in $v^*$. In Section \ref{3.2} is shown how to construct $w$ as a linear combination of unstable Characteristic Lyapunov Vectors (CLV). In Section \ref{3.3} they give an efficient way to compute $w$ from $v^*$ and a bunch of homogeneous solutions. And finally, our goal, in Section \ref{3.4} they show how to compute $d\langle J \rangle_\infty /ds$.
+
+\subsection{Describing perturbations by tangents}\label{3.1}
+
+Now we use tangent solutions to describe trajectory perturbations coming from perturbations on the initial data and parameters. The perturbation due to parameter changes is described by inhomogeneous tangents\footnote{I don't know why}, and the one due to intial data changes is described by homogeneous tangents.
+
+First we, differentiate Eq. \ref{eq:1} with respect to $s$, keeping $\phi$ constant. And rename $v^* = \partial u/ \partial s$. Thus, the equation for $v^*$ can be obtained from:
+\begin{eqnarray}
+  \frac{d}{ds} \left( \frac{du}{dt} \right)  = \frac{\partial }{\partial s} \left( \frac{\partial u}{\partial t} \right)= \frac{d}{ds}f(u,s),\nonumber\\
+  \frac{\partial }{\partial t} \left( \frac{\partial u}{\partial s} \right) = \frac{\partial f}{\partial u} \frac{\partial u}{\partial s} + \frac{\partial f}{\partial s}\cancelto{1}{\frac{\partial u}{\partial u}},\nonumber\\
+  \frac{\partial v^*}{\partial t}  = \partial_u fv^* + \partial_s f,
+  \label{des:1}
+\end{eqnarray}
+For this to be true we need $u\in C^2$ at least. The initial conditions are easier to differentiate, since $\phi$ is fixed
+\begin{eqnarray}
+  \frac{d}{ds} u(t=0) = \cancelto{0}{\frac{d u_0(\phi)}{ds}},\nonumber\\
+  v^*(t=0) = 0.\label{des:2}
+\end{eqnarray}
+Therefore, using Eqs. \ref{des:1} and \ref{des:2}, the dynamical equation for $v^*$ is
+\begin{equation}
+  \frac{dv^*}{dt} + \partial_u fv^* = \partial_s f, \quad v^*(t=0) = 0
+  \label{eq:4}
+,\end{equation}
+where $\partial_u f$ is an $\mathbb{R}^m\times\mathbb{R}^m$ matrix\footnote{Think about why is m.} and $\partial_sf$ is an $\mathbb{R}^m$ vector. We must notice two things here: First, the second equation reflects that $u_0$ remains unchanged (the initial conditions). Second, by definition $v^*$ reflects the trajectory perturbation due to changes on the parameters, keeping the initial data constant, this was shown in the first column of Fig. \ref{fig:lz63}.
+
+Under the assumption of ergodicity, the initial conditions don't affect the long-time behaviour. This suggests that $\phi$ is not necesarily fixed if we are only interested in the change of a long-time average. So, we define inhomogeneous tangent solutions as solutions to Eq. \ref{eq:4} without the initial condition,
+\begin{equation}
+  \frac{dv}{dt} + \partial_u fv = \partial_s f.
+  \label{eq:5}
+\end{equation}
+
+Now, we got rid of the initial condition, so the system is underdetermined. In order to have a well-posed problem again we can add initial conditions or add one more equation. The second will be our approach. By definition $v$ reflects the perturbation of the trajectory due to a change in the parameter. That was half of what we were looking for, the other half is the part that describes perturbations on the trajectory due to changes in the initial data.
+
+We define $w = \partial u / \partial \phi$, where $s$ is fixed and $w$ satisfies the so called homogenenous tangent equation:
+\begin{equation}
+  \frac{dw}{dt} + \partial_u fw = 0.
+  \label{eq:6}
+\end{equation}
+By it's definition, $w$ describes the divergence in trajectories due to changes on the initial conditions while $s$ is fixed. As shown on the right column of Fig \ref{fig:lz63}.
+
+Hence $v^*$ and $w$ describe the effects of only varying $s$ and $\phi$ respectively. for two different inhomogeneous solutions $v^*$ and $v$ the difference between them is a homogeneous tangent solution\footnote{We can go from $v^*$ to $v$ by adding the right $w$ to $v^*$, this will work, since $w$ is solution to the homogeneous equation and is equivalent to add one zero on the left hand side.}.
+
+We know that by changing $s$ we generate two effects: one is equivalent to change $u_0$, and the other shifts the attractor. We are interested on the second one, so we need to find $w$ such that $v = v^* + w$ contains only the long-time effect.
+
+Naturally we can not only add but also subtract $w$ from $v^*$. Such subtraction is the main idea behind NILSS. As previously stated, we want to find two trajectories associated with parameters $s$ and $s + \Delta s$ that do not diverge from each other. We can say that $v$ is sufficient to reveal the long time effect of varying one parameter, if the euclidean norm of its orthonormal projection onto $V^\perp (u)$ remains bounded as the trajectory length goes to infinity. We denote this sufficient v by the shadowing direction $v^\infty$, whose existence is proved by the shadowing Lemma\footnote{Read about this.}. Here $V^\perp(u)$ is defined as:
+\begin{equation}
+  V^\perp(u) = \{ p\in \mathbb{R}^m  : p^T f(u) = 0 \}.
+  \label{eq:7}
+\end{equation}
+Moreover the orthogonal projection $p^\perp$ of $p$ is defined as:
+\begin{equation}
+  p^\perp = p - \frac{f^T p}{f^Tf}f.
+  \label{eq:8}
+\end{equation}
+$v^{\infty\perp}$ is defined by substituting $p$ by $v^\infty$. We define $w^\perp$, $\delta u ^\perp$, $v^{*\perp}$, and ${\zeta_j^\perp}$ in a similar way. We use the norm of $v^{\infty\perp}$ because it describes the perpendicular distance between two trajectories.
+\subsection{Constructing $w$ from unstable Characteristic Lyapunov Vectors (CLV)}\label{3.2}
+
+\subsection{Computing $v^\perp$ by NILSS}\label{3.3}
+
+\subsection{Computing $d\langle J \rangle_\infty /ds$ from the tangent solution}\label{3.4}
 
 \section{Questions}
 \begin{description}
