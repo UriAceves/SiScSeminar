@@ -7,4 +7,4 @@ The documents here are some aids and final products for my presentation on the S
 
 ## References
 
-[1] A. Ni and Q. Wang,  “Sensitivity analysis on chaotic dynamical systems by non-intrusive least squares shadowing (NILSS),”Journal of Computational Physics, vol. 347, pp. 56 – 77, 2017.7
+[1] A. Ni and Q. Wang,  “Sensitivity analysis on chaotic dynamical systems by non-intrusive least squares shadowing (NILSS), https://arxiv.org/pdf/1611.00880.pdf
