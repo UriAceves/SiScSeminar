@@ -29,7 +29,7 @@
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
-\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template}
 \usepackage{amssymb}
 \usepackage{fancyhdr}
 \pagestyle{fancy}
@@ -42,6 +42,7 @@
 %\setlength\parindent{0pt} % Uncomment to remove all indentation from paragraphs
 
 \graphicspath{{Pictures/}} % Specifies the directory where pictures are stored
+\newcommand{\norm}[1]{\left\|#1\right\|}
 
 % \renewcommand{\thesection}{\Roman{section}}
 % \renewcommand{\thesubsection}{\thesection.\Roman{subsection} }
@@ -53,7 +54,6 @@
 %----------------------------------------------------------------------------------------
 
 \begin{titlepage}
-
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
 
 \center % Center everything on the page
@@ -229,6 +229,43 @@ Moreover the orthogonal projection $p^\perp$ of $p$ is defined as:
 $v^{\infty\perp}$ is defined by substituting $p$ by $v^\infty$. We define $w^\perp$, $\delta u ^\perp$, $v^{*\perp}$, and ${\zeta_j^\perp}$ in a similar way. We use the norm of $v^{\infty\perp}$ because it describes the perpendicular distance between two trajectories.
 \subsection{Constructing $w$ from unstable Characteristic Lyapunov Vectors (CLV)}\label{3.2}
 
+The main goal of NILSS is to find a $w$ such that $v^\perp = v^{*\perp} + w^\perp$ approximates $v^{\infty \perp}$ on a finite trajectory. $v^\infty$ is the inhomogeneous tangent, whose projection $v^{\infty\perp}$ remains bounded. It is, nevertheless, important to notice that $v^\perp$ can be unbounded for infinite long trajectories. But don't worry, we work on finite trajectories with NILSS, and on those trajectories $v^\perp$ is a good approximation\footnote{This is not so obvious to me now.} of $v^{\infty\perp}$. This means that when computing sensitivities, using $v^\perp$ yields similar results as using $v^{\infty\perp}$.
+
+In this subsection, one way to construct $w$ is shown, suposing we know $v^\infty$ and all the CLV\footnote{Read about CLV.}. We wouldn't use this in practice, since it is really expensive, but it is a good way to show that we only need a linear combination of unstable CLV to construct $w$. And using this knowledge NILSS will be developed in the next subsection.
+
+We need the definitions of Lyapunov Exponent (LE) and the corresponding CLVs. Moreover, we assume the system has a full\footnote{What does it mean full here?} set of LEs and CLVs, i.e. $\exists$ $ \{\lambda_j, j=1,2,\ldots,m\}$ such that for every trajectory on the attractor, there is a unique representation of the homogeneous tangent solution $w(u)$:
+\begin{equation}
+  w(u) = \sum_{j=1}^m a_j\zeta_j(u),
+  \label{eq:9}
+\end{equation}
+where $a_j\in \mathbb{R}$ remains constant throughout the trajectory.
+
+Each $\zeta_j(u)$ is a homogeneous tangent solution, and its norm behaves exponentially on time, i.e. $\exists C_1, C_2 > 0$ s.t. $\forall u(t), j, t$, it satisfies
+\begin{equation}
+  C_1 e^{\lambda_jt}\norm{\zeta_j(u(0))} \leq \norm{\zeta_j(u(t))} \leq C_2 e^{\lambda_jt}\norm{\zeta_j(u(0))},
+  \label{eq:10}
+\end{equation}
+where $\{\lambda_j\}$ and $\{\zeta_j\}$ are LEs and CLVs, respectively. CLVs with $\lambda_j>0$ are called unstable modes, CLVs with $\lambda_j<0$ stable, and those with $\lambda_j=0$ neutral. We will denote unstable modes by $\lambda_1,\ldots,\lambda_{m_{us}}$ and the neutral modes by $\lambda_m$. The rest will be the stable modes\footnote{Here we can see why unstable modes are called like this. Basically the positive factor of the exponential makes the CLVs grow over time.}.
+
+We assume that for all $s$ we are interested in there is no point $u$ on the attractor $\Lambda$ such that $f(u)=0$ and $\Lambda$ is bounded. These two assumptions imply that such mode is neutral, i.e. the LE of the CLV is 0. We also assume that $f(u)$ is the only neutral mode.
+
+The CLVs are not necessarily in $V^\perp$, but we can project them, and then Eq. \ref{eq:9} becomes:
+\begin{equation}
+  w^\perp(u) = \sum_{j=1}^{m-1} a_j\zeta_j^\perp(u),
+  \label{eq:11}
+\end{equation}
+Because $V^\perp$ is perpendicular to $f(u)$, the projection of the neutral mode is zero\footnote{It is easy to see this if we substitute $\zeta_j^\perp = 0$ in Eq. \ref{eq:8}.}. This means that in Eq. \ref{eq:11} only the unstable and stable modes are taken on the sum, and since we have only one neutral mode the remaining modes are $m-1$. We use also the LEs to classify the projections of the CLVs as stable and unstable.
+
+We assume all CLVs are bounded from each other\footnote{What does this means?}. Under this assumption, the norm of stable and unstable modes ${\zeta_j^\perp}$ also behaves like exponentials, as defined in Eq. \ref{eq:10}.
+
+Now let's suppose we know $v^\infty$ and all its CLVs. Since $v^\infty - v^*$ is a homogeneous tangent solution, we can decompose $v^{\infty \perp} - v^{*\perp}$ using Eq. \ref{eq:11}. By using the first $m_{us}$ coefficients we let
+\begin{equation}
+  w= \sum_{j=1}^{m_{us}} a_j \zeta_j.
+  \label{eq:12}
+\end{equation}
+Therefore $v^\perp = v^{*\perp} - w$ approximates $v^{\infty\perp}$, since $v^{\infty\perp} - v^\perp$ contains only stable modes, and they decay exponentially with time.
+
+As we said before, in practice this is not implemented since it requires the knowledge of $v^\infty$ and all its CLVs. But the lesson we will carry onto the next section is this one: $w$ is a linear combination of only unstable modes.
 \subsection{Computing $v^\perp$ by NILSS}\label{3.3}
 
 \subsection{Computing $d\langle J \rangle_\infty /ds$ from the tangent solution}\label{3.4}

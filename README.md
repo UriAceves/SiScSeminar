@@ -1,7 +1,7 @@
 # Documents for the Simulation Sciences Seminar
 ---
 
-This documents are some aids and final products for my presentation on the Simulation Sciences Seminar. The work is entirely based on [1], on the personal notes complete sentences of this paper of paraphrased ones are taken. Additionally, most of the images belong to the paper. I do not claim ownership over the intellectual contents there, the notes were developed with the sole intention of explain the topic to myself.
+The documents here are some aids and final products for my presentation on the Simulation Sciences Seminar. The work is entirely based on [1], on the personal notes complete sentences of this paper or paraphrased ones are taken. Additionally, most of the images belong to the paper. I do not claim ownership over the intellectual contents there, the notes were developed with the sole intention of explain the topic to myself.
 
 ---
 
