@@ -267,14 +267,32 @@ Therefore $v^\perp = v^{*\perp} - w$ approximates $v^{\infty\perp}$, since $v^{\
 
 As we said before, in practice this is not implemented since it requires the knowledge of $v^\infty$ and all its CLVs. But the lesson we will carry onto the next section is this one: $w$ is a linear combination of only unstable modes.
 \subsection{Computing $v^\perp$ by NILSS}\label{3.3}
+In NILSS we compute $v = v^* + w$ such that $v^{\perp} \approx v^{\infty \perp}$. We want the integration of $v^{\perp}$ to approximate the one of $v^{\infty \perp}$ and later use $v^{\perp}$ to compute the sensitivity. To do this, we solve the NILSS problem on a time interval, this problem is to minimize the $L^2$ norm of $v^\perp = v^{*\perp} + W^\perp a$:
+\begin{equation}
+  \min_a \frac{1}{2} \int_0^T (v^{*\perp} + W^\perp a)^T (v^{*\perp} + W^\perp a) dt,
+  \label{eq:13}
+\end{equation}
+which is a least squares problem with arguments $a\in \mathbb{R}^M$, where $M$ is an integer larger\footnote{Why larger} than the number of positive LEs $m_{us}$. $v^*$ is the conventional tangent solution, and $W^\perp (t)$ is a matrix whose columns are homogeneous tangent solutions $\{w_j^\perp(t), j=1,\ldots,M\}$. The initial conditions $\{w_j^\perp(0) $ are randomized unit vectors in $\mathbb{R}$.
+
+\begin{wrapfigure}{l}{0.3\textwidth} % Inline image example
+  \begin{center}
+    \includegraphics[width=0.28\textwidth]{diff.png}
+  \end{center}
+  \caption{Intuition of NILSS.}
+  \label{fig:2}
+\end{wrapfigure}
+
+Now we need to make sure that $v^\perp$ exists, but we saw that we can construct it using unstable CLVs instead of $W$. Furthermore, it has been proven\footnote{Need to check the reference.} that as times evolves, the span of $\{w_j^\perp(t), j=1,\ldots,M\}$ converges to the span of CLVs $\{\zeta_j^\perp(t), j=1,\ldots,M\}$ with the largest $M$ LEs. So, if we replace $W$ by the CLVs we span a similar space, and the solution, as we know lies on such space\footnote{This is really important, it should be on the slides.}.
+
+Next, we need to understand why minimizing the $L^2$ norm of $v^{*\perp} + W^\perp a$ yields $v^\perp \approx v^{\infty\perp}$. First, $v^\perp$ can be written as the summation of $v^{\infty \perp}$ and some homogeneous tangents\footnote{I'm not pretty sure why. Maybe it's a consequence of $v^\perp\approx v^{\infty\perp}$}. Because $v^{\infty\perp}$ is bounded and the unstable modes grow exponentially, then minimizing $v^\perp$ over a long trajectory implies the difference $v^\perp - v^{\infty\perp}$
+cannot contain a significant amount of unstable modes. Although stable modes may be left in the difference, they will decay exponentially. This effect is shown on Fig. \ref{fig:2}
 
 \subsection{Computing $d\langle J \rangle_\infty /ds$ from the tangent solution}\label{3.4}
-
+\subsection{Benefits of NILSS}
 \section{Questions}
 \begin{description}
   \item [1] What is a tangent solution?
   \item [2] What is a least squares problem?
-  \item [3] What is an unstable mode?
   \item [4] What are the Lorenz 63 and the CFD simulation of flow over backward-facing step systems?
   \item [5] Why is NILSS good for systems with may degrees of freedom and few unstable modes?
 \end{description}
