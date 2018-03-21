@@ -288,7 +288,20 @@ Next, we need to understand why minimizing the $L^2$ norm of $v^{*\perp} + W^\pe
 cannot contain a significant amount of unstable modes. Although stable modes may be left in the difference, they will decay exponentially. This effect is shown on Fig. \ref{fig:2}
 
 \subsection{Computing $d\langle J \rangle_\infty /ds$ from the tangent solution}\label{3.4}
-\subsection{Benefits of NILSS}
+Since $v-v^\perp$ is parallel to f\footnote{How do we know that? Moreover, can we just multiply a constant to go from one to the other?}, we can define $\xi$ as the scalar that fulfills:
+\begin{equation}
+  \xi f = v - v^\perp
+  \label{eq:14}
+\end{equation}
+To find a pair $(v^\perp,\xi)$, we first find a $v$ that solves Eq. \ref{eq:5}, project v onto the subspace $V^\perp$ to find $v^\perp$, then use Eq. \ref{eq:14} to find $\xi$.
+
+once we have the solution vector $a$ of NILSS, we can construct $v=v^{*} + Wa$ and compute the corresponding $\xi$. And then we have the following approximation for $d\langle J \rangle_\infty / ds$
+\begin{equation}
+  \frac{d\langle J \rangle_\infty}{ds} \approx \frac{1}{T}\left[ \int_0^T (\partial_u Jv + \partial_s J)dt + \xi|_0^T \langle J \rangle_T - (\xi J)|_0^T\right],
+  \label{eq:15}
+\end{equation}
+Notice that in Eq. \ref{eq:15}, the tangent solution $v$ is used intead of its projection $v^\perp$. This equation is later derived here.
+\subsection{Benefits of NILSS}\label{3.5}
 \section{Questions}
 \begin{description}
   \item [1] What is a tangent solution?
