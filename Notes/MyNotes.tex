@@ -302,6 +302,14 @@ once we have the solution vector $a$ of NILSS, we can construct $v=v^{*} + Wa$ a
 \end{equation}
 Notice that in Eq. \ref{eq:15}, the tangent solution $v$ is used intead of its projection $v^\perp$. This equation is later derived here.
 \subsection{Benefits of NILSS}\label{3.5}
+the first benefit is that it is easily implemented with existing tangent solvers\footnote{Remains to be seen.}. The data used in the NILSS problem are $v^{*\perp}$ and $\{ w_j^\perp \}$. $v^*$ is the result of a conventional tangent solver\footnote{I still need to read about tangent solvers.}. $\{ w_j \}$ are given by homogeneous tangent solvers, which is just set the right hand side of Eq. \ref{eq:5} equal to zero. Once we obtain those ones, the projections can be done using Eq. \ref{eq:8}.
+
+Another way to get the tangent solutions is to approximate them by finite differences. In this way NILSS requires only primal simulation and no longer the tangent solvers\footnote{Because the tangent solvers were used to obtain the tangent solutions.}.
+
+In NILSS, the computational cost is reduced, since we use only M arguments in Eq. \ref{eq:13}. The main cost is actually the set up, i.e. obtaining $v^{*\perp}$ and $\{ w_j^\perp \}$, hence the computational cost of NILSS is proportional to the number of unstable modes $m_{us}$. Usually we have $m_{us} \ll m$, thus, the cost of NILSS is low.
+
+A nice side-effect is that NILSS uses less memory that LSS. Hence, the tangent solutions of NILSS don't tend to be stored concurrently in memory\footnote{Just read what concurrently means}. NILSS can use tangent solutions stored on external memory, this saves computer memory, but might slow things down.
+
 \section{Questions}
 \begin{description}
   \item [1] What is a tangent solution?
