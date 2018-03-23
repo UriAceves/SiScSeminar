@@ -310,6 +310,60 @@ In NILSS, the computational cost is reduced, since we use only M arguments in Eq
 
 A nice side-effect is that NILSS uses less memory that LSS. Hence, the tangent solutions of NILSS don't tend to be stored concurrently in memory\footnote{Just read what concurrently means}. NILSS can use tangent solutions stored on external memory, this saves computer memory, but might slow things down.
 
+\section{Tangent NILSS algorithm}
+
+In this section, the stability is controlled by rescaling $v^{*\perp}$ and $W^\perp$ after every short segment of time $\Delta T$. Then we discuss how do we select the number of homogeneous solutions $M$ and the time step $\Delta T$, Finally, we walk through the NILSS algorithm.
+
+\subsection{Solving NILSS on multiple time segments}
+
+Since both $v^{*\perp}$ and $W^\perp$ grow exponentially, we can not ignore the round-off error when storing in the computer. The growht on $v^{*\perp}$ and $W^\perp$ will also generate an ill-conditioned covariance matrix $(w^\perp)^T W^\perp$, since all the $\{w_j^\perp\}$ will eventually be dominated by the fastest growing unstable CLVs. That is why we need reescaling every time step. Here we show how to do it.
+
+
+\begin{wrapfigure}{l}{0.3\textwidth} % Inline image example
+  \begin{center}
+    \includegraphics[width=0.28\textwidth]{fig3.png}
+  \end{center}
+  \caption{Schematization of the reescaling part of the algorithm.}
+  \label{fig:3}
+\end{wrapfigure}
+We make a grid of K+1 points from 0 to $K$. Next the time segment $i$ is defined as $[t_i, t_{i+1}]$. For each time segment $i$, we define an ihnomogeneous solution $\{v_i^*\}$ and homogeneous solutions $\{W_i\}$, such that each $W_i = [w_{i,1},\ldots,w_{i,M}]$. This idea is illustrated in Fig. \ref{fig:3}.
+
+We want to rescale and orthogonalize $v_i^{*\perp}$ and $W_i^\perp$ and the end of every timestep so that they don't become dominated by the fastest growing CLVs. We also want to keep the space $v^{*\perp} + span(W^\perp)$ the same across interfaces, so we have:
+\begin{equation}
+  v_i^{*\perp}(t_i) + span(W_{i}^\perp(t_i)) = v_{i-1}^{*\perp}(t_i) + span(W_{i-1}^\perp(t_i)).
+  \label{eq:16}
+\end{equation}
+
+To achieve this, we orthonormalize $W^\perp$ via QR decomposition\footnote{What is a QR decomposition?}:
+\begin{equation}
+  W_i^\perp(t_{i+1}) = Q_i R_i.
+  \label{eq:17}
+\end{equation}
+We set the initial conditions of the next tangent elements to
+\begin{equation}
+  W_{i+1}(t_{i+1}) = Q_i.
+  \label{eq:18}
+\end{equation}
+In QR factorization, the column vectors in $Q_i$ and $W_i^\perp$ could represent each other if the column vectors in $W_i^\perp$ are linearly independent. The linear independence of the initial condition of $W_i^\perp$ can be preserved after $\Delta T$ if $f$ is Lipschitz continuous. Hence\footnote{They remain linearly independent, but why would they span the same space?}, the $span(W_i^\perp(t_i)) = span(W_{i+1}^\perp(t_{i}))$.
+
+We subtract from $v^{*\perp}$ it's orthogonal projection on $W^\perp$ to obtain the initial condition of the next timestep:
+\begin{equation}
+  v^*_{i+1}(t_{i+1}) = v^{*\perp}_i (t_{i+1}) - W_{i+1}^\perp(t_{i+1})b_i,
+  \label{eq:19}
+\end{equation}
+where $b_i = W_{i+1}^\perp(t_{i+1})^T v_i^*(t_{i+1})$. $v_{i+1}^{*\perp}(t_{i+1})$ is still in the space $v_i^{*\perp}(t_i) + span(W_i^\perp(t_i)).$ The norm of $v_i^{*\perp}(t_i)$ is reduced, since it no longer contain the unstable modes that were subtracted through the projection.
+
+We can recover a continuous $v^\perp$ over the whole trakectory. Now Eq. \ref{eq:16} is satisfied, for any $a_{i-1}, \exists a_i$, such that:
+\begin{equation}
+  v_i^{*\perp}(t_i) + W_i^\perp (t_i)a_i = v_{i-1}^{*\perp}(t_i) + W_{i-1}^\perp(t_i)a_{i-1}.
+  \label{eq:20}
+\end{equation}
+Hence we have the necessary conditions to enforce the continuity requirement:
+\begin{equation}
+  v_i^\perp(t_i) = v_{i-1}^\perp(t_i).
+  \label{eq:21}
+\end{equation}
+The solution $v^\perp$ over multiple timesteps is equivalent to one over a longer step. However we avoid getting too big CLVs by reescaling every step. Using QR factorization to reescale homogeneous solutions is not a new idea, is widely used for computing LEs\cite{chater}.
 \section{Questions}
 \begin{description}
   \item [1] What is a tangent solution?
