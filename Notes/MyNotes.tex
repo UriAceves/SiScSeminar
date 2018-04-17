@@ -364,6 +364,19 @@ Hence we have the necessary conditions to enforce the continuity requirement:
   \label{eq:21}
 \end{equation}
 The solution $v^\perp$ over multiple timesteps is equivalent to one over a longer step. However we avoid getting too big CLVs by reescaling every step. Using QR factorization to reescale homogeneous solutions is not a new idea, is widely used for computing LEs\cite{chater}.
+
+\subsection{Determining parameters for NILSS}
+
+In NILSS the user has the posibility of choosing two parameters: the number of homogeneous solutions $M$ to be used and the size of the time-step $\Delta T$. Once both parameters are set we can proceed with our calculations.
+
+The determination of $M$ is made based on the LE. The j-th largest LE $\lambda_j$ is computed by:
+
+\begin{equation}
+  \lambda_j \approx \frac{1}{K\Delta T} \sum_{i=1}^L \log{(|d_{ij}|)},
+  \label{eq:22}
+\end{equation}
+where $d_{ij}$ is the j-th diagonal element of $R_i$\footnote{What is $R_i$ and also what is that $K$ in the equation.}. It is important to notice that the computation of ${R_i}$ onlt requires $W$ but not $v^*$, NILSS can compute homogeneous solutions $W$ before $v^*$. While computing $W$ we can gradually increase M and therefore compute more LEs, which appear in decreasing order, until we reach a LE with negative sign, at that point we will know we found all positive LEs.
+
 \section{Questions}
 \begin{description}
   \item [1] What is a tangent solution?
