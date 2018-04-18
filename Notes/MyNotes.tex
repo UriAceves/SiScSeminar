@@ -377,6 +377,29 @@ The determination of $M$ is made based on the LE. The j-th largest LE $\lambda_j
 \end{equation}
 where $d_{ij}$ is the j-th diagonal element of $R_i$\footnote{What is $R_i$ and also what is that $K$ in the equation.}. It is important to notice that the computation of ${R_i}$ onlt requires $W$ but not $v^*$, NILSS can compute homogeneous solutions $W$ before $v^*$. While computing $W$ we can gradually increase M and therefore compute more LEs, which appear in decreasing order, until we reach a LE with negative sign, at that point we will know we found all positive LEs.
 
+$\Delta T$ is determined by the constraint that the CLV with the largest LE ($\lambda_1$) does not dominate the M-th LE ($\lambda_M$), then the ratio between the norm of this two satisfies \clearpage
+\begin{equation}
+  \frac{||\zeta_1^\perp(u(t))||/||\zeta_1^\perp(u(0))||}{||\zeta_M^\perp(u(t))||/||\zeta_M^\perp(u(0))||} \approx \exp((\lambda_1 - \lambda_M)t).
+  \label{eq:23}
+\end{equation}
+As a consequence of this we will have that after a time-step of $t=(\lambda_1 - \lambda_M)^{-1}$ the fastest growing CLV grows about three times larger than the M-th one. If $\Delta T$ is too large then the covariance matrix (it will appear eventually) will be ill conditioned. To prevent this from happening we reescale $W^\perp$ and $v^{*\perp}$ after $\Delta T < (\lambda_1 - \lambda_M)^{-1}$. On the other hand, if $\Delta T$ becomes very small then this will lead to a larger optimization problem, and more steps. This will give the criteria for the lower bound.
+
+Both criteria are \textit{a posteriori}, which means that we actually need to run  NILSS for a few segments to check if they are satisfied. In most cases choosing a small $\Delta T$ does not contribute significantly to the computational cost of the algorithm, so the recomendation is to actually seting small $\Delta T$ to begin with and then modify it according to the given criteria. After $\Delta T$ is chosen we can determine $M$ accordingly.
+
+\subsection{Pre-processing}
+
+First, we integrate the primal problem over a sufficient period of time until it lands on the attractor, at that point we can set $t=0$ and begin the calculations from $t=0$ to $t=T$ to obtain the primal solution.
+
+\subsection{Computing the homogeneous solution $\{W_i\}$}
+
+We compute one inhomogeneous and M homogeneous tangent equations for each of the $K$ time segments $[t_0,t_1],\ldots,[t_K-1, t_K]$, where $t_0 = 0$ and $t_K = T$.
+
+We start at the first segment with random initial conditions for each column vector in $W$:
+\begin{equation}
+  W_0 (0) = [w_{0,1},\ldots,w_{0,M} ], \quad \textnormal{with }\quad w_{0,j}\in V^\perp(u(0)).
+  \label{eq:24}
+\end{equation}
+Then, we proceed with the following algorithm, wich starts at $i=0$.
 \section{Questions}
 \begin{description}
   \item [1] What is a tangent solution?
