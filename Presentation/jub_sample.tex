@@ -1,0 +1,155 @@
+\documentclass{beamer}
+\usetheme{JUB}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+\usepackage{media9}
+
+%% Use any fonts you like.
+% \usepackage{libertine}
+
+\title{Embracing the Chaos}
+\subtitle{Sensitivity Analysis on Chaotic Dynamical Systems by NILSS}
+\author{Uriel A. Aceves R.}
+\date{June 20, 2018\\ \vspace{0.3cm}
+Supervisor: Johannes Lotz (LuFG Informatik 12: STCE, RWTH Aachen)}
+\institute{\url{uriel.aceves@rwth-aachen.de}}
+
+\begin{document}
+
+\begin{frame}[plain,t]
+\titlepage
+\end{frame}
+
+\begin{frame}% [plain,t]
+	\frametitle{Outline}
+  \begin{footnotesize}
+\tableofcontents
+\end{footnotesize}
+\end{frame}
+
+%=============================================================================================
+\section{Introduction}
+  \subsection{Chaos as a way of living}
+
+\begin{frame}
+  \frametitle{Should the world behave nicely?}
+  \textit{
+  “Chaos was the law of nature; Order was the dream of man.”
+  ― Henry Adams}
+
+\end{frame}
+
+\section{Predictability in chaos?}
+\subsection{So what about butterflies?}
+  \Transition{images/lorenz}{https://pbs.twimg.com/media/C75sWjvW0AA8Mfc.jpg}
+\subsection{I have seen this before}
+  \begin{frame}
+    \frametitle{Getting Closer}
+    \begin{center}
+    \includegraphics[width=0.38\textwidth]{images/002_very_far.png}
+    \includegraphics[width=0.38\textwidth]{images/002_close.png}\\
+
+    \includegraphics[width=0.38\textwidth]{images/003_closer.png}
+    \includegraphics[width=0.38\textwidth]{images/004_very_close.png}
+  \end{center}
+  \end{frame}
+
+  \subsection{Oh no... Nevermind}
+
+  \Transition{images/butter}{http://www.mrlovenstein.com/comic/50}
+
+  \subsection{Should we give up?}
+  \begin{frame}
+    \frametitle{Let's Focus}
+    \begin{center}
+    \includegraphics[width=0.7\textwidth]{images/001_lage.png}\\
+    \tiny{Three highlighted zones zones}
+  \end{center}
+  \end{frame}
+
+\begin{frame}
+  \frametitle{There is hope after all}
+  \begin{center}
+  \includegraphics[width=\textwidth]{images/average.png}\\
+  \tiny{Time spent on average around this zones}
+\end{center}
+\end{frame}
+
+\section{On construction}
+\subsection{one}
+\subsection{two}
+\subsection{three}
+\subsection{four}
+
+\section{Wrap-up}
+
+\section{References}
+\begin{frame}
+  \frametitle{More to know}
+  \begin{scriptsize}
+  \begin{enumerate}
+    \item Ni A., Wang Q., (2017), \textit{Sensitivity analysis on chaotic dynamical systems by Non-Intrusive Least Squares Shadowing (NILSS)} , Journal of Computational Physics, \textbf{347}, 56-77.
+    \item {Ni}, A., {Wang}, Q., {Fernandez}, P., and {Talnikar}, C., \textit{Sensitivity analysis on chaotic dynamical systems by Finite Difference Non-Intrusive Least Squares Shadowing (FD-NILSS)}, \url{arXiv:1711.06633}
+    \item Safiran N., Lotz J., Naumann U., (2016), \textit{Algorithmic Differentiation of Numerical Methods:Tangent and Adjoint Solvers for Parameterized Systems of Nonlinear Equations}, Procedia Computer Science, \textbf{80}, 2231-2235.
+    \item Strogatz, Steven H., (2015). \textit{Nonlinear dynamics and chaos: with applications to physics, biology, chemistry, and engineering.} Boulder, CO: Westview Press.
+    \item Gleick, J. (1988). \textit{Chaos: Making a new science}. New York, N.Y., U.S.A: Penguin.
+    \item Alvarez A., Ghys É., and Leys J., \textit{Chaos a Mathematical Adventure}, \url{http://www.chaos-math.org/en}
+  \end{enumerate}
+\end{scriptsize}
+\end{frame}
+
+
+
+% \section{Introduction}
+% \begin{frame}
+% \frametitle{A Frame}
+% \framesubtitle{Bullet points}
+% \begin{itemize}
+% \item First thing
+% 	\begin{itemize}
+% 	\item small point
+% 	\item fine print
+% 	\end{itemize}
+% \item Second thing
+% 	\begin{enumerate}
+% 	\item point 1
+% 	\end{enumerate}
+% \item Third thing
+% 	\begin{description}
+% 	\item[Research] the scientific pursuit for knowledge
+% 	\end{description}
+% \end{itemize}
+% \end{frame}
+%
+% \subsection{Text}
+% \begin{frame}
+% \frametitle{Another Frame}
+% Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+% \end{frame}
+%
+% \subsection{Blocks}
+% \begin{frame}
+% \frametitle{Blocks}
+% \begin{definition}[Greetings]
+% Hello World
+% \end{definition}
+%
+% \begin{theorem}[Fermat's Last Theorem]
+% $a^n + b^n = c^n, n \leq 2$
+% \end{theorem}
+%
+% \begin{alertblock}{Uh-oh.}
+% By the pricking of my thumbs.
+% \end{alertblock}
+%
+% \begin{exampleblock}{Uh-oh.}
+% Something evil this way comes.
+% \end{exampleblock}
+%
+% \end{frame}
+
+\ThankYouFrame
+
+\end{document}
