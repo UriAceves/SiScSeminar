@@ -77,8 +77,31 @@ Supervisor: Johannes Lotz (LuFG Informatik 12: STCE, RWTH Aachen)}
 \end{center}
 \end{frame}
 
-\section{On construction}
-\subsection{one}
+\Transition{images/optimism}{https://www.onlinecollegecourses.com/2012/06/21/why-optimism-matters-for-student-success-now-and-after-graduation-2/}
+
+\section{Non-Intrusive Least Squares Shadowing}
+\subsection{In average I'm not that sensitive}
+\begin{frame}
+  \frametitle{Dynamical systems and sensitivities}
+  The governing equation of a dynamical system is
+  \begin{equation}
+    \frac{du}{dt} = f(u,s), \quad{u(t=0)=u_0},
+  \end{equation}
+  We want to analyze the changes of a long-time averaged quantity represented by $J(u,s)$.
+  \begin{equation}
+    \langle J \rangle_\infty := \lim_{t\rightarrow \infty} \frac{1}{T}\int_0^T J(u,s)dt.
+  \end{equation}
+\end{frame}
+
+\begin{frame}
+  \frametitle{It doesn't look that hard}
+  We want to calculate $\frac{d}{ds}\langle J \rangle_\infty $ the problem is...\pause
+  \begin{equation}
+    \frac{d}{ds} \langle J \rangle_\infty \neq \lim_{T\rightarrow \infty} \frac{\partial}{\partial s} \langle J \rangle_T (s,\phi,T).
+  \end{equation}
+  \pause
+  The usual methods diverge most of the time, e.g. the transient method.
+\end{frame}
 \subsection{two}
 \subsection{three}
 \subsection{four}
