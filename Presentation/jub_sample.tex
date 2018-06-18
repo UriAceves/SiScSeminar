@@ -65,7 +65,7 @@ Supervisor: Johannes Lotz (LuFG Informatik 12: STCE, RWTH Aachen)}
     \frametitle{Let's Focus}
     \begin{center}
     \includegraphics[width=0.7\textwidth]{images/001_lage.png}\\
-    \tiny{Three highlighted zones zones}
+    \tiny{Three highlighted zones}
   \end{center}
   \end{frame}
 
@@ -80,7 +80,7 @@ Supervisor: Johannes Lotz (LuFG Informatik 12: STCE, RWTH Aachen)}
 \Transition{images/optimism}{https://www.onlinecollegecourses.com/2012/06/21/why-optimism-matters-for-student-success-now-and-after-graduation-2/}
 
 \section{Non-Intrusive Least Squares Shadowing}
-\subsection{In average I'm not that sensitive}
+\subsection{We have to be careful}
 \begin{frame}
   \frametitle{Dynamical systems and sensitivities}
   The governing equation of a dynamical system is
@@ -100,22 +100,156 @@ Supervisor: Johannes Lotz (LuFG Informatik 12: STCE, RWTH Aachen)}
     \frac{d}{ds} \langle J \rangle_\infty \neq \lim_{T\rightarrow \infty} \frac{\partial}{\partial s} \langle J \rangle_T (s,\phi,T).
   \end{equation}
   \pause
-  The usual methods diverge most of the time, e.g. the transient method.
+  The usual methods diverge most of the time, sometimes they exceed by $10^{100}$ the expected value.\footnote{This competes hand in hand with string theory for the prize for worst predicted results of all time.}
 \end{frame}
-\subsection{two}
-\subsection{three}
-\subsection{four}
 
-\section{Wrap-up}
+\Transition{images/spider}{http://knowyourmeme.com/}
+
+\subsection{Exploit similarities}
+
+\begin{frame}
+  \frametitle{Vary initial conditions vs time evolution}
+  \begin{center}
+
+    \includegraphics[width=.98\textwidth]{images/transient}\\
+
+
+\tiny{Ni, A., Wang, Q., (2017), \textit{Sensitivity analysis on chaotic dynamical systems by Non-Intrusive Least Squares Shadowing (NILSS)} , Journal of Computational Physics, \textbf{347}, 56-77.}
+\end{center}
+\end{frame}
+
+\Transition{images/smil}{http://www.insurancechat.co.za/2017-09/could-sending-a-smiley-face-get-me-into-legal-hot-water/}
+
+\begin{frame}
+  \frametitle{Substract instabilities}
+
+  \begin{itemize}
+    \item We are looking to build trajectories with parameters $\rho$ and $\rho + \delta \rho$ such that they don't diverge from each other.\pause
+    \item Their difference contains only the long-time effect.
+    \item   Therefore we can reveal the long time effect with shorter trajectories.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Idea}
+  \begin{center}
+
+    \includegraphics[width=0.5\textwidth]{images/intuition}\\
+
+    Now we only need to solve a minimization problem.
+    \vspace{2cm}
+
+    \tiny{Ni, A., Wang, Q., (2017), \textit{Sensitivity analysis on chaotic dynamical systems by Non-Intrusive Least Squares Shadowing (NILSS)} , Journal of Computational Physics, \textbf{347}, 56-77.}
+
+\end{center}
+\end{frame}
+
+\subsection{Algorithm}
+\begin{frame}
+  \frametitle{Flowchart}
+  \begin{center}
+
+    \includegraphics[width=\textwidth]{images/diag}\\
+
+
+\end{center}
+\end{frame}
+
+\Transition{images/smMex}{https://www.pinterest.de/pin/128211920620408724}
+
+\subsection{Examples}
+
+\begin{frame}
+  \frametitle{Lorenz attractor}
+  \begin{center}
+
+    \includegraphics[width=0.85\textwidth]{images/finite}\\
+
+  \includegraphics[width=0.40\textwidth]{images/nils}
+  %\includegraphics[width=0.45\textwidth]{images/VdPol}
+
+\tiny{Patrick J. Blonigan, Qiqi Wang, Eric J. Nielsen, and Boris Diskin.  \"Least-Squares Shadowing Sensitivity Analysis of Chaotic Flow Around a Two-Dimensional Airfoil\", AIAA Journal, Vol. 56, No. 2 (2018), pp. 658-672.}
+\end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Van der Pol attractor}
+  \begin{center}
+
+    %\includegraphics[width=0.85\textwidth]{images/finite}\\
+
+  %\includegraphics[width=0.40\textwidth]{images/nils}
+  \includegraphics[width=0.70\textwidth]{images/VdPol}
+
+
+\end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{One more example}
+  \begin{center}
+
+    %\includegraphics[width=0.85\textwidth]{images/finite}\\
+
+  %\includegraphics[width=0.40\textwidth]{images/nils}
+  \includegraphics[width=0.70\textwidth]{images/cyl}\\
+
+  Cylinder can rotate\\
+
+\end{center}
+
+\tiny{Angxiu Ni, Qiqi Wang, Pablo Fernandez, Chaitanya Talnikar. Sensitivity analysis on chaotic dynamical systems by Finite Difference Non-Intrusive Least Squares Shadowing (FD-NILSS).	arXiv:1711.06633 [physics.comp-ph]}
+\end{frame}
+
+\begin{frame}
+  \frametitle{One more example}
+  \begin{center}
+
+    %\includegraphics[width=0.85\textwidth]{images/finite}\\
+
+  %\includegraphics[width=0.40\textwidth]{images/nils}
+  \includegraphics[width=0.85\textwidth]{images/bound}\\
+
+
+\end{center}
+
+\tiny{Angxiu Ni, Qiqi Wang, Pablo Fernandez, Chaitanya Talnikar. Sensitivity analysis on chaotic dynamical systems by Finite Difference Non-Intrusive Least Squares Shadowing (FD-NILSS).	arXiv:1711.06633 [physics.comp-ph]}
+\end{frame}
+
+\section{Why should I care?}
+
+\begin{frame}
+  \frametitle{Advantages}
+  \begin{itemize}
+    \item Easy to implement if you already have a solver.
+    \item Low cost in comparison to other methods.\pause
+    \item Therefore faster.
+    \item Uses less memory.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Where are sensitivities used?}
+  Sensitivities help us to\\
+  \begin{itemize}
+    \item Design products.
+    \item Control processes and systems.
+    \item Solve inverse problems (e.g. CAT scan images).
+    \item Estimate simulation errors.
+    \item Quantify uncertainties.
+  \end{itemize}
+\end{frame}
+
+\Transition{images/meteor}{https://news.nationalgeographic.com/}
 
 \section{References}
 \begin{frame}
   \frametitle{More to know}
   \begin{scriptsize}
   \begin{enumerate}
-    \item Ni A., Wang Q., (2017), \textit{Sensitivity analysis on chaotic dynamical systems by Non-Intrusive Least Squares Shadowing (NILSS)} , Journal of Computational Physics, \textbf{347}, 56-77.
+    \item Ni, A., Wang, Q., (2017), \textit{Sensitivity analysis on chaotic dynamical systems by Non-Intrusive Least Squares Shadowing (NILSS)} , Journal of Computational Physics, \textbf{347}, 56-77.
     \item {Ni}, A., {Wang}, Q., {Fernandez}, P., and {Talnikar}, C., \textit{Sensitivity analysis on chaotic dynamical systems by Finite Difference Non-Intrusive Least Squares Shadowing (FD-NILSS)}, \url{arXiv:1711.06633}
-    \item Safiran N., Lotz J., Naumann U., (2016), \textit{Algorithmic Differentiation of Numerical Methods:Tangent and Adjoint Solvers for Parameterized Systems of Nonlinear Equations}, Procedia Computer Science, \textbf{80}, 2231-2235.
+    \item Safiran, N., Lot,z J., Naumann, U., (2016), \textit{Algorithmic Differentiation of Numerical Methods:Tangent and Adjoint Solvers for Parameterized Systems of Nonlinear Equations}, Procedia Computer Science, \textbf{80}, 2231-2235.
     \item Strogatz, Steven H., (2015). \textit{Nonlinear dynamics and chaos: with applications to physics, biology, chemistry, and engineering.} Boulder, CO: Westview Press.
     \item Gleick, J. (1988). \textit{Chaos: Making a new science}. New York, N.Y., U.S.A: Penguin.
     \item Alvarez A., Ghys É., and Leys J., \textit{Chaos a Mathematical Adventure}, \url{http://www.chaos-math.org/en}
@@ -123,6 +257,7 @@ Supervisor: Johannes Lotz (LuFG Informatik 12: STCE, RWTH Aachen)}
 \end{scriptsize}
 \end{frame}
 
+\Transition{images/QA}{http://www.sednacomics.com/}
 
 
 % \section{Introduction}
